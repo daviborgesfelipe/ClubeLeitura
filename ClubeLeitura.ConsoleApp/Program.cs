@@ -10,7 +10,7 @@ namespace ClubeLeitura.ConsoleApp
             RevistaServico revistaServico = new RevistaServico();
             AmigoServico amigoServico = new AmigoServico();
             EmprestimoServico emprestimoServico = new EmprestimoServico();
-            revistaServico.PopularListaRevista();
+            revistaServico.PopularListaRevistaComCaixa();
             amigoServico.PopularListaAmigos();
             while (true) 
             {
