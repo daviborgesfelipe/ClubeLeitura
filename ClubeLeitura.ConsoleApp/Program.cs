@@ -49,7 +49,7 @@ namespace ClubeLeitura.ConsoleApp
                                 revistaServico.CadastrarRevista();
                                 break;
                             case 2:
-                                revistaServico.VizualizarRevistas();
+                                revistaServico.VizualizarListaRevistas();
                                 break;
                             case 3:
                                 revistaServico.VizualizarRevistaPorId();
