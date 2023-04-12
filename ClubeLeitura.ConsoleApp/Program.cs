@@ -6,6 +6,7 @@ namespace ClubeLeitura.ConsoleApp
     {
         static void Main(string[] args)
         {
+            MenuServico menuServico = new MenuServico();
             RevistaServico revistaServico = new RevistaServico();
             AmigoServico amigoServico = new AmigoServico();
             EmprestimoServico emprestimoServico = new EmprestimoServico();
@@ -13,31 +14,12 @@ namespace ClubeLeitura.ConsoleApp
             amigoServico.PopularListaAmigos();
             while (true) 
             {
-                Console.Clear();
-                Console.WriteLine("Clube da Leitura");
-                Console.WriteLine();
-                Console.WriteLine("Selecione a opcao desejada");
-                Console.WriteLine();
-                Console.WriteLine("[1] Menu amigos");
-                Console.WriteLine("[2] Menu revistas");
-                Console.WriteLine("[3] Menu emprestimos");
-                Console.WriteLine();
+                menuServico.MenuInicial();
                 int opcao = Convert.ToInt32(Console.ReadLine());
                 switch (opcao)
                 {
                     case 1:
-                        //chama menu amigo
-                        Console.Clear();
-                        Console.WriteLine("Menu amigo");
-                        Console.WriteLine();
-                        Console.WriteLine("Selecione a opcao desejada");
-                        Console.WriteLine();
-                        Console.WriteLine("[1] Cadastrar um amigo");
-                        Console.WriteLine("[2] Vizualizar todos os amigos");
-                        Console.WriteLine("[3] Vizualizar amigo por id");
-                        Console.WriteLine("[4] Editar um amigo");
-                        Console.WriteLine("[5] Excluir um amigo");
-                        Console.WriteLine();
+                        menuServico.MenuAmigo();
                         int opcaoMenuAmigos = Convert.ToInt32(Console.ReadLine());
                         switch (opcaoMenuAmigos)
                         {
@@ -59,18 +41,7 @@ namespace ClubeLeitura.ConsoleApp
                         }
                         break; 
                     case 2:
-                        //chama menu revistas
-                        Console.Clear();
-                        Console.WriteLine("Menu revistas");
-                        Console.WriteLine();
-                        Console.WriteLine("Selecione a opcao desejada");
-                        Console.WriteLine();
-                        Console.WriteLine("[1] Cadastrar uma revista");
-                        Console.WriteLine("[2] Vizualizar todas as revistas");
-                        Console.WriteLine("[3] Vizualizar revistas por id");
-                        Console.WriteLine("[4] Editar uma revista");
-                        Console.WriteLine("[5] Excluir uma revista");
-                        Console.WriteLine();
+                        menuServico.MenuRevistas();
                         int opcaoMenuRevistas = Convert.ToInt32(Console.ReadLine());
                         switch (opcaoMenuRevistas)
                         {
