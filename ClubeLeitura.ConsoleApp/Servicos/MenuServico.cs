@@ -8,7 +8,7 @@ namespace ClubeLeitura.ConsoleApp.Servicos
 {
     internal class MenuServico
     {
-        public void MenuInicial()
+        public void ImprimeMenuInicial()
         {
             Console.Clear();
             Console.WriteLine("Clube da Leitura");
@@ -20,7 +20,7 @@ namespace ClubeLeitura.ConsoleApp.Servicos
             Console.WriteLine("[3] Menu emprestimos");
             Console.WriteLine();
         }
-        public void MenuAmigo() 
+        public void ImprimeMenuAmigo() 
         {
             Console.Clear();
             Console.WriteLine("Menu amigo");
@@ -34,7 +34,7 @@ namespace ClubeLeitura.ConsoleApp.Servicos
             Console.WriteLine("[5] Excluir um amigo");
             Console.WriteLine();
         }
-        public void MenuRevistas() 
+        public void ImprimeMenuRevistas() 
         {
             Console.Clear();
             Console.WriteLine("Menu revistas");

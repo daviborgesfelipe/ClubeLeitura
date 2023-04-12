@@ -14,12 +14,12 @@ namespace ClubeLeitura.ConsoleApp
             amigoServico.PopularListaAmigos();
             while (true) 
             {
-                menuServico.MenuInicial();
+                menuServico.ImprimeMenuInicial();
                 int opcao = Convert.ToInt32(Console.ReadLine());
                 switch (opcao)
                 {
                     case 1:
-                        menuServico.MenuAmigo();
+                        menuServico.ImprimeMenuAmigo();
                         int opcaoMenuAmigos = Convert.ToInt32(Console.ReadLine());
                         switch (opcaoMenuAmigos)
                         {
@@ -41,7 +41,7 @@ namespace ClubeLeitura.ConsoleApp
                         }
                         break; 
                     case 2:
-                        menuServico.MenuRevistas();
+                        menuServico.ImprimeMenuRevistas();
                         int opcaoMenuRevistas = Convert.ToInt32(Console.ReadLine());
                         switch (opcaoMenuRevistas)
                         {
