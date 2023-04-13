@@ -1,5 +1,7 @@
-﻿using ClubeLeitura.ConsoleApp.Entidades;
-namespace ClubeLeitura.ConsoleApp.Servicos
+﻿using ClubeLeitura.ConsoleApp.ModuloCaixa;
+using ClubeLeitura.ConsoleApp.Servicos;
+
+namespace ClubeLeitura.ConsoleApp.ModuloRevista
 {
     internal class RevistaServico
     {
@@ -8,8 +10,8 @@ namespace ClubeLeitura.ConsoleApp.Servicos
         List<Revista> revistas = new List<Revista>();
         internal void PopularListaRevistaComCaixa()
         {
-            Revista revistaComCaixaUm = new Revista(1, "Acelerando", 777, new DateTime(21/6/19), new Caixa(1, "SuperMercado", "Verde", 33));
-            Revista revistaComCaixaDois = new Revista(2, "Recreio", 4312, new DateTime(03/02/23), new Caixa(2, "Caixa Plastico", "Transparente", 0));
+            Revista revistaComCaixaUm = new Revista(1, "Acelerando", 777, "01/02/2020", new Caixa(1, "SuperMercado", "Verde", 33));
+            Revista revistaComCaixaDois = new Revista(2, "Recreio", 4312, "11/07/2023", new Caixa(2, "Caixa Plastico", "Transparente", 0));
             revistas.Add(revistaComCaixaUm);
             revistas.Add(revistaComCaixaDois);
         }
@@ -19,21 +21,22 @@ namespace ClubeLeitura.ConsoleApp.Servicos
         internal void CadastrarRevista()
         {
             Console.Clear();
+            Console.WriteLine("Cadastro Revista");
+            Console.WriteLine();
             Console.WriteLine("Digite o titulo da revista");
             string titulo = Console.ReadLine();
             Console.WriteLine("Digite o numero da edicao da revista");
             int numeroEdicao = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("Digite a data de lancamento da revista");
-            DateTime anoRevista = Convert.ToDateTime(Console.ReadLine());
-            DateTime anoRevistaConvertido = anoRevista.Date;
+            string anoRevista = Console.ReadLine();
             Console.WriteLine("Digite onde a cor da caixa onde a revista sera guardadas");
             string corDaCaixa = Console.ReadLine();
             Console.WriteLine("Digite o nome da etiqueta da caixa");
             string nomeEtiqueta = Console.ReadLine();
             Console.WriteLine("Digite o numero da caixa");
             double numeroCaixa = Convert.ToDouble(Console.ReadLine());
-            Caixa caixa = new Caixa(idCaixa, corDaCaixa,nomeEtiqueta, numeroCaixa);
-            Revista revista = new Revista(idRevista, titulo, numeroEdicao, anoRevistaConvertido, caixa);
+            Caixa caixa = new Caixa(idCaixa, corDaCaixa, nomeEtiqueta, numeroCaixa);
+            Revista revista = new Revista(idRevista, titulo, numeroEdicao, anoRevista, caixa);
             revistas.Add(revista);
             idRevista++;
             idCaixa++;
@@ -81,6 +84,48 @@ namespace ClubeLeitura.ConsoleApp.Servicos
             Console.WriteLine("Digite enter para voltar ao menu revistas");
             Console.ReadLine();
         }
+        internal Revista VizualizarRevistaPorId(int id)
+        {
+            Console.Clear();
+            foreach (Revista revista in revistas)
+            {
+                if (revista.Id == id)
+                {
+                    Console.WriteLine($"Titulo: {revista.Titulo}");
+                    Console.WriteLine($"NumeroEdicao: {revista.NumeroEdicao}");
+                    Console.WriteLine($"AnoRevista: {revista.AnoRevista}");
+                    Console.WriteLine($"EtiquedaCaixa: {revista.Caixa.Etiqueta}");
+                    Console.WriteLine($"NumeroCaixa: {revista.Caixa.Numero}");
+                    Console.WriteLine($"CorCaixa: {revista.Caixa.Cor}");
+                    Console.WriteLine("----------------------------------------------");
+                    return revista;
+                }
+            }
+            Console.WriteLine($"Revista com ID {id} não encontrado.");
+            Console.ReadLine();
+            return null;
+        }
+        internal Revista VizualizarRevistaPorNome(string titulo)
+        {
+            Console.Clear();
+            foreach (Revista revista in revistas)
+            {
+                if (revista.Titulo == titulo)
+                {
+                    Console.WriteLine($"Titulo: {revista.Titulo}");
+                    Console.WriteLine($"NumeroEdicao: {revista.NumeroEdicao}");
+                    Console.WriteLine($"AnoRevista: {revista.AnoRevista}");
+                    Console.WriteLine($"EtiquedaCaixa: {revista.Caixa.Etiqueta}");
+                    Console.WriteLine($"NumeroCaixa: {revista.Caixa.Numero}");
+                    Console.WriteLine($"CorCaixa: {revista.Caixa.Cor}");
+                    Console.WriteLine("----------------------------------------------");
+                    return revista;
+                }
+            }
+            Console.WriteLine($"Revista com titulo {titulo} não encontrado.");
+            Console.ReadLine();
+            return null;
+        }
         #endregion
 
         #region EditarRevista
@@ -90,11 +135,11 @@ namespace ClubeLeitura.ConsoleApp.Servicos
             VizualizarListaRevistas();
             Console.WriteLine("Digite o id da revista que deseja editar");
             int id = Convert.ToInt32(Console.ReadLine());
-            if (revistas == null) 
+            if (revistas == null)
             {
                 Console.WriteLine("Lista ainda esta vazia");
             }
-            else 
+            else
             {
                 foreach (Revista revista in revistas)
                 {
@@ -105,8 +150,7 @@ namespace ClubeLeitura.ConsoleApp.Servicos
                         Console.WriteLine("Digite o numero da edicao da revista");
                         int novoNumeroEdicao = Convert.ToInt32(Console.ReadLine());
                         Console.WriteLine("Digite a data de lancamento da revista");
-                        DateTime novoAnoRevista = Convert.ToDateTime(Console.ReadLine());
-                        DateTime novoAnoRevistaConvertido = novoAnoRevista.Date;
+                        string novoAnoRevista = Console.ReadLine();
                         Console.WriteLine("Deseja alterar a caixa?");
                         Console.WriteLine();
                         Console.WriteLine("[1] Sim");
@@ -122,23 +166,23 @@ namespace ClubeLeitura.ConsoleApp.Servicos
                                 Console.WriteLine("Digite o novo numero da caixa");
                                 double novoNumeroCaixa = Convert.ToDouble(Console.ReadLine());
                                 Caixa caixa = new Caixa(novaCorDaCaixa, novoNomeEtiqueta, novoNumeroCaixa);
-                            
+
                                 revista.Titulo = novoTitulo;
                                 revista.NumeroEdicao = novoNumeroEdicao;
-                                revista.AnoRevista = novoAnoRevistaConvertido;
+                                revista.AnoRevista = novoAnoRevista;
                                 revista.Caixa = caixa;
                                 break;
                             case 2:
                                 revista.Titulo = novoTitulo;
                                 revista.NumeroEdicao = novoNumeroEdicao;
-                                revista.AnoRevista = novoAnoRevistaConvertido;
+                                revista.AnoRevista = novoAnoRevista;
                                 break;
                         }
                         Console.WriteLine();
                         Console.WriteLine("Digite enter para voltar ao menu revistas");
                         Console.ReadLine();
-                    } 
-                    else 
+                    }
+                    else
                     {
                         Console.WriteLine($"Revista com o id {id} não foi encontrada");
                     }
@@ -157,7 +201,7 @@ namespace ClubeLeitura.ConsoleApp.Servicos
 
             foreach (Revista revista in revistasExclusao)
             {
-                if(revista.Id == id)
+                if (revista.Id == id)
                 {
                     revistas.Remove(revista);
                 }

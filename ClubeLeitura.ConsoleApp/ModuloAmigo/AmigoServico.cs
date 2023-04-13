@@ -1,15 +1,16 @@
-﻿using ClubeLeitura.ConsoleApp.Entidades;
-namespace ClubeLeitura.ConsoleApp.Servicos
+﻿using ClubeLeitura.ConsoleApp.ModuloAmigo;
+
+namespace ClubeLeitura.ConsoleApp.ModuloAmigo
 {
     internal class AmigoServico
     {
         List<Amigo> amigos = new List<Amigo>();
         internal void PopularListaAmigos()
         {
-            Amigo test01 = new Amigo(1, "test1", "testResp", "4732413078", "Rua test, TestVille, Sao Test, Testzil");
-            Amigo test02 = new Amigo(2, "test2", "testResp", "4732413123", "Rua test, TestVille, Sao Test, Testzil");
-            amigos.Add(test01);
-            amigos.Add(test02);
+            Amigo amigoUm = new Amigo(1, "Davi", "Davi Borges", "4732413078", "Rua Programador, CodeVille, Sao Test, Brazil");
+            Amigo amigoDois = new Amigo(2, "Caio", "Caio Valle", "4932413123", "Rua Desenvolvedor, Costa Code, Test Grande do Sul, Brazil");
+            amigos.Add(amigoUm);
+            amigos.Add(amigoDois);
         }
         #region CadastrarAmigo
         static int id = 3;
@@ -57,7 +58,41 @@ namespace ClubeLeitura.ConsoleApp.Servicos
             Console.ReadLine();
         }
         #endregion
+        #region VizualizarUmAmigo
+        internal Amigo VizualizarAmigosPorId(int id)
+        {
+            Console.Clear();
+            foreach (Amigo amigo in amigos)
+            {
+                if (amigo.Id == id)
+                {
+                    Console.WriteLine($"amigo: {amigo.Nome}");
+                    return amigo;
+                }
+            }
+            Console.WriteLine($"Amigo com ID {id} não encontrado.");
+            Console.ReadLine();
+            return null;
+        }
+        #endregion
 
+        #region VizualizarUmAmigo
+        internal Amigo VizualizarAmigosPorNome(string nome)
+        {
+            Console.Clear();
+            foreach (Amigo amigo in amigos)
+            {
+                if (amigo.Nome == nome)
+                {
+                    Console.WriteLine($"Amigo: {amigo.Nome}");
+                    return amigo;
+                }
+            }
+            Console.WriteLine($"Amigo com nome {nome} não encontrado.");
+            Console.ReadLine();
+            return null;
+        }
+        #endregion
         #region EditarAmigo
         public void EditaAmigo()
         {
