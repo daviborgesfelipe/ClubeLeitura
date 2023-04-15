@@ -8,7 +8,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
 {
     internal class RepositorioAmigo
     {
-        private static int IdAmigo = 3;
+        private static int IdAmigo = 4;
         private static List<Amigo> _listaAmigos = new List<Amigo>();
         public static List<Amigo> ListarTodos() 
         {
@@ -35,10 +35,12 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
         }
         public static void PopularListaAmigos()
         {
-            Amigo amigoUm = new Amigo(1, "Davi", "Davi Borges", "4732413078", "Rua Programador, CodeVille, Sao Test, Brazil");
+            Amigo amigoUm = new Amigo(1, "Davi", "Davi Borges", "4732413078", "Rua Programador, CodeVille, Santa Compiladora, Brazil");
             Amigo amigoDois = new Amigo(2, "Caio", "Caio Valle", "4932413123", "Rua Desenvolvedor, Costa Code, Test Grande do Sul, Brazil");
+            Amigo amigoTres = new Amigo(3, "Fabian", "Fabian", "5293245523", "Avenida Analista, Sao Compilador, Soft Ware do Norte, Brazil");
             _listaAmigos.Add(amigoUm);
             _listaAmigos.Add(amigoDois);
+            _listaAmigos.Add(amigoTres);
         }
         private static void IncrementaIdAmigo()
         {

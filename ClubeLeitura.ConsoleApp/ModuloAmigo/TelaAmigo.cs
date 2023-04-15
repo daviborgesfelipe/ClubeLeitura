@@ -1,5 +1,7 @@
 ﻿using ClubeLeitura.ConsoleApp;
 using System.Collections;
+using System.ComponentModel;
+using System.Security.Cryptography;
 
 namespace ClubeLeitura.ConsoleApp.ModuloAmigo
 {
@@ -22,17 +24,28 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
 
             return opcaoMenuAmigo;
         }
-
         public static void InserirNovoAmigo()
         {
+            Console.Clear();
             Console.WriteLine("Inserir Amigo");
+            Console.WriteLine();
             Amigo novoAmigo = ObterAmigo();
             RepositorioAmigo.Inserir(novoAmigo);
-            Console.WriteLine("Inserido com sucesso");
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine("Amigo inserido com sucesso");
+            Console.ResetColor();
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine("Pressione qualquer tecla para voltar ao menu de inicial.");
+            Console.ResetColor();
+            Console.ReadKey();
         }
         public static void EditarAmigo()
         {
+            Console.Clear();
             Console.WriteLine("Editar Amigo");
+            Console.WriteLine();
             bool temAmigos = VisualizarAmigos();
             if (temAmigos == false) 
             {
@@ -42,11 +55,16 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
             int idEncontrado = EncontrarIdAmigo();
             Amigo amigoAtualizado = ObterAmigo();
             RepositorioAmigo.Editar(idEncontrado, amigoAtualizado);
-            Console.WriteLine("Editado com sucesso");
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine("Amigo editado com sucesso");
+            Console.ResetColor();
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine("Pressione qualquer tecla para voltar ao menu de inicial.");
+            Console.ResetColor();
+            Console.ReadKey();
         }
-
-
-        //
         private static int EncontrarIdAmigo()
         {
             int idSelecionado;
@@ -66,16 +84,25 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
         public static bool VisualizarAmigos()
         {
             List<Amigo> listaChamados = RepositorioAmigo.ListarTodos();
-            Console.WriteLine("{0,-10} | {1,-30} | {2,-30} | {3,-20} | {4,-60}", "Id", "Nome", "NomeResponsavel", "Telefone", "Endereco");
-            Console.WriteLine("-------------------------------------------------------------------------------------------------------------------------------");
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine("{0,-10} | {1,-10} | {2,-15} | {3,-10} | {4,-60}",
+                "Id", "Nome", "NomeResponsavel", "Telefone", "Endereco");
+            Console.ResetColor();
+            Console.WriteLine("--------------------------------------------------------------------------------------------------------------------");
             foreach (Amigo amigo in listaChamados)
             {
-                Console.WriteLine("{0,-10} | {1,-30} | {2,-30} | {3,-20} | {4,-60}",
+                Console.WriteLine("{0,-10} | {1,-10} | {2,-15} | {3,-10} | {4,-60}",
                     amigo.Id, amigo.Nome, amigo.NomeResponsavel, amigo.Telefone, amigo.Endereco);
+
             }
 
             Console.ResetColor();
-            Console.ReadLine();
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine("Pressione qualquer tecla para voltar ao menu de inicial.");
+            Console.ResetColor();
+            Console.ReadKey();
             return true;
         }
         public static Amigo ObterAmigo()
@@ -93,7 +120,9 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
         }
         public static void ExcluirAmigo()
         {
+            Console.Clear();
             Console.WriteLine("Excluir Amigo");
+            Console.WriteLine();
             bool temAmigos = VisualizarAmigos();
             if (temAmigos == false)
             {
@@ -102,8 +131,15 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
             Console.WriteLine();
             int idSelecionado = EncontrarIdAmigo();
             RepositorioAmigo.Excluir(idSelecionado);
-            Console.WriteLine("Amigo excluído com sucesso!");
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine("Amigo excluido com sucesso");
+            Console.ResetColor();
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine("Pressione qualquer tecla para voltar ao menu de inicial.");
+            Console.ResetColor();
+            Console.ReadKey();
         }
-
     }
 }

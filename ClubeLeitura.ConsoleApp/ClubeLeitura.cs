@@ -9,15 +9,10 @@ namespace ClubeLeitura.ConsoleApp
     {
         static void Main(string[] args)
         {
-            RepositorioAmigo.PopularListaAmigos();
             RepositorioRevista.PopularListaRevistas();
+            RepositorioAmigo.PopularListaAmigos();
 
             MenuServico menuServico = new MenuServico();
-            RevistaServico revistaServico = new RevistaServico();
-            AmigoServico amigoServico = new AmigoServico();
-            EmprestimoServico emprestimoServico = new EmprestimoServico();
-            revistaServico.PopularListaRevistaComCaixa();
-            emprestimoServico.PopularListaEmprestimo();
             while (true) 
             {
                 int opcaoMenuInicial = ApresentarMenuInicial();
@@ -97,19 +92,19 @@ namespace ClubeLeitura.ConsoleApp
                 switch (opcaoMenuEmprestimo)
                 {
                     case 1:
-                        emprestimoServico.CadastrarEmprestimo(amigoServico, revistaServico);
+                        //CadastrarEmprestimo
                         break;
                     case 2:
-                        emprestimoServico.VizualizarEmprestimo();
+                        //VizualizarEmprestimo();
                         break;
                     case 3:
-                        emprestimoServico.VizualizarEmprestimoPorId();
+                        //VizualizarEmprestimoPorId();
                         break;
                     case 4:
-                        emprestimoServico.EditarEmprestimo();
+                        //EditarEmprestimo();
                         break;
                     case 5:
-                        emprestimoServico.FinalizarEmprestimo();
+                        //FinalizarEmprestimo();
                         break;
                     case 6:
                         menuServico.ImprimeMenuInicial();
