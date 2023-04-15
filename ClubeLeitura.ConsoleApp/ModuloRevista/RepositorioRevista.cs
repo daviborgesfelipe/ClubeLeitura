@@ -1,25 +1,28 @@
-﻿using ClubeLeitura.ConsoleApp.ModuloCaixa;
+﻿using ClubeLeitura.ConsoleApp.Compartilhado;
+using ClubeLeitura.ConsoleApp.ModuloAmigo;
+using ClubeLeitura.ConsoleApp.ModuloCaixa;
+using System.Collections.Generic;
 
 namespace ClubeLeitura.ConsoleApp.ModuloRevista
 {
-    internal class RepositorioRevista
+    internal class RepositorioRevista : RepositorioBase
     {
-        private static int IdRevista = 3;
-        private static List<Revista> _listaRevistas = new List<Revista>();
-        public static List<Revista> ListarTodos()
+        internal List<Revista> ListarTodos()
         {
-            return _listaRevistas;
+            List<object> listaGenerica = _listaRegistro;
+            List <Revista> listaTipada = listaGenerica.Cast<Revista>().ToList();
+            return listaTipada;
         }
-        public static void Inserir(Revista revista)
+        internal void Inserir(Revista revista)
         {
-            revista.Id = IdRevista;
-            _listaRevistas.Add(revista);
-            IncrementaIdRevista();
+            revista.Id = Id;
+            _listaRegistro.Add(revista);
+            IncrementarId();
         }
-        public static Revista BuscarPorId(int id)
+        internal Revista BuscarPorId(int id)
         {
             Revista revista = null;
-            foreach (Revista _revista in _listaRevistas)
+            foreach (Revista _revista in _listaRegistro)
             {
                 if (_revista.Id == id)
                 {
@@ -29,22 +32,20 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             }
             return revista;
         }
-        public static void PopularListaRevistas()
+        internal void PopularListaRevistas()
         {
             Revista revistaComCaixaUm = new Revista(1, "Acelerando", 777, "01/02/2020", new Caixa(1, "SuperMercado", "Verde", 33));
             Revista revistaComCaixaDois = new Revista(2, "Recreio", 4312, "11/07/2023", new Caixa(2, "Caixa Plastico", "Transparente", 0));
-            _listaRevistas.Add(revistaComCaixaUm);
-            _listaRevistas.Add(revistaComCaixaDois);
-        }
-        private static void IncrementaIdRevista()
-        {
-            IdRevista++;
+            Revista revistaComCaixaTres = new Revista(3, "Surf", 2018, "23/12/2021", new Caixa(3, "Gaveta da Cama", "Medeira", 0));
+            _listaRegistro.Add(revistaComCaixaUm);
+            _listaRegistro.Add(revistaComCaixaDois);
+            _listaRegistro.Add(revistaComCaixaTres);
         }
 
-        internal static Revista SelecionarPorId(int idSelecionado)
+        internal Revista SelecionarPorId(int idSelecionado)
         {
             Revista revista = null;
-            foreach (Revista _revista in _listaRevistas)
+            foreach (Revista _revista in _listaRegistro)
             {
                 if (_revista.Id == idSelecionado)
                 {
@@ -54,7 +55,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             }
             return revista;
         }
-        internal static void Editar(int id, Revista revistaAtualizada)
+        internal void Editar(int id, Revista revistaAtualizada)
         {
             Revista revista = SelecionarPorId(id);
             revista.Titulo = revistaAtualizada.Titulo;
@@ -63,10 +64,10 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             revista.Caixa.Etiqueta = revistaAtualizada.Caixa.Etiqueta;
             revista.Caixa.Numero = revistaAtualizada.Caixa.Numero;
         }
-        public static void Excluir(int idSelecionado)
+        internal void Excluir(int idSelecionado)
         {
             Revista revista = SelecionarPorId(idSelecionado);
-            _listaRevistas.Remove(revista);
+            _listaRegistro.Remove(revista);
         }
     }
 }
