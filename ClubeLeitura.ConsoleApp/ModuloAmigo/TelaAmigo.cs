@@ -1,13 +1,15 @@
 ﻿using ClubeLeitura.ConsoleApp;
+using ClubeLeitura.ConsoleApp.Compartilhado;
 using System.Collections;
 using System.ComponentModel;
 using System.Security.Cryptography;
 
 namespace ClubeLeitura.ConsoleApp.ModuloAmigo
 {
-    internal class TelaAmigo
+    internal class TelaAmigo : TelaBase
     {
-        public static int ApresentarMenuCadastroAmigo()
+        public RepositorioAmigo repositorioAmigo = null;
+        public int ApresentarMenuCadastroAmigo()
         {
             Console.Clear();
             Console.WriteLine("Menu amigo");
@@ -24,13 +26,13 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
 
             return opcaoMenuAmigo;
         }
-        public static void InserirNovoAmigo()
+        public void InserirNovoAmigo()
         {
             Console.Clear();
             Console.WriteLine("Inserir Amigo");
             Console.WriteLine();
             Amigo novoAmigo = ObterAmigo();
-            RepositorioAmigo.Inserir(novoAmigo);
+            repositorioAmigo.Criar(novoAmigo);
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine("Amigo inserido com sucesso");
@@ -41,49 +43,9 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
             Console.ResetColor();
             Console.ReadKey();
         }
-        public static void EditarAmigo()
+        public bool VisualizarAmigos()
         {
-            Console.Clear();
-            Console.WriteLine("Editar Amigo");
-            Console.WriteLine();
-            bool temAmigos = VisualizarAmigos();
-            if (temAmigos == false) 
-            {
-                return;
-            }
-            Console.WriteLine();
-            int idEncontrado = EncontrarIdAmigo();
-            Amigo amigoAtualizado = ObterAmigo();
-            RepositorioAmigo.Editar(idEncontrado, amigoAtualizado);
-            Console.WriteLine();
-            Console.ForegroundColor = ConsoleColor.DarkGreen;
-            Console.WriteLine("Amigo editado com sucesso");
-            Console.ResetColor();
-            Console.WriteLine();
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("Pressione qualquer tecla para voltar ao menu de inicial.");
-            Console.ResetColor();
-            Console.ReadKey();
-        }
-        private static int EncontrarIdAmigo()
-        {
-            int idSelecionado;
-            bool idInvalido;
-            do
-            {
-                Console.Write("Digite o Id do amigo: ");
-                idSelecionado = Convert.ToInt32(Console.ReadLine());
-                idInvalido = RepositorioAmigo.SelecionarPorId(idSelecionado) == null;
-                if (idInvalido) 
-                {
-                    Console.WriteLine("Id inválido, tente novamente", ConsoleColor.Red);                
-                }
-            } while (idInvalido);
-            return idSelecionado;
-        }
-        public static bool VisualizarAmigos()
-        {
-            List<Amigo> listaChamados = RepositorioAmigo.ListarTodos();
+            List<Amigo> listaChamados = repositorioAmigo.ListarTodos();
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("{0,-10} | {1,-10} | {2,-15} | {3,-10} | {4,-60}",
@@ -105,20 +67,31 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
             Console.ReadKey();
             return true;
         }
-        public static Amigo ObterAmigo()
+        public void EditarAmigo()
         {
-            Console.WriteLine("Digite o nome do amigo");
-            string nome = Console.ReadLine();
-            Console.WriteLine("Digite o nome do responsavel");
-            string nomeResponsavel = Console.ReadLine();
-            Console.WriteLine("Digite o telefone do amigo");
-            string telefone = Console.ReadLine();
-            Console.WriteLine("Digite o endereco do amigo");
-            string endereco = Console.ReadLine();
-            Amigo amigo = new Amigo(nome, nomeResponsavel, telefone, endereco);
-            return amigo;
+            Console.Clear();
+            Console.WriteLine("Editar Amigo");
+            Console.WriteLine();
+            bool temAmigos = VisualizarAmigos();
+            if (temAmigos == false) 
+            {
+                return;
+            }
+            Console.WriteLine();
+            int idEncontrado = EncontrarIdAmigo();
+            Amigo amigoAtualizado = ObterAmigo();
+            repositorioAmigo.Editar(idEncontrado, amigoAtualizado);
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine("Amigo editado com sucesso");
+            Console.ResetColor();
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine("Pressione qualquer tecla para voltar ao menu de inicial.");
+            Console.ResetColor();
+            Console.ReadKey();
         }
-        public static void ExcluirAmigo()
+        public void ExcluirAmigo()
         {
             Console.Clear();
             Console.WriteLine("Excluir Amigo");
@@ -130,7 +103,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
             }
             Console.WriteLine();
             int idSelecionado = EncontrarIdAmigo();
-            RepositorioAmigo.Excluir(idSelecionado);
+            repositorioAmigo.Excluir(idSelecionado);
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine("Amigo excluido com sucesso");
@@ -140,6 +113,35 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
             Console.WriteLine("Pressione qualquer tecla para voltar ao menu de inicial.");
             Console.ResetColor();
             Console.ReadKey();
+        }
+        private int EncontrarIdAmigo()
+        {
+            int idSelecionado;
+            bool idInvalido;
+            do
+            {
+                Console.Write("Digite o Id do amigo: ");
+                idSelecionado = Convert.ToInt32(Console.ReadLine());
+                idInvalido = repositorioAmigo.SelecionarPorId(idSelecionado) == null;
+                if (idInvalido) 
+                {
+                    Console.WriteLine("Id inválido, tente novamente", ConsoleColor.Red);                
+                }
+            } while (idInvalido);
+            return idSelecionado;
+        }
+        public Amigo ObterAmigo()
+        {
+            Console.WriteLine("Digite o nome do amigo");
+            string nome = Console.ReadLine();
+            Console.WriteLine("Digite o nome do responsavel");
+            string nomeResponsavel = Console.ReadLine();
+            Console.WriteLine("Digite o telefone do amigo");
+            string telefone = Console.ReadLine();
+            Console.WriteLine("Digite o endereco do amigo");
+            string endereco = Console.ReadLine();
+            Amigo amigo = new Amigo(nome, nomeResponsavel, telefone, endereco);
+            return amigo;
         }
     }
 }

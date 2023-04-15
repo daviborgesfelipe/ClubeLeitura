@@ -1,29 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ClubeLeitura.ConsoleApp.Compartilhado;
+using ClubeLeitura.ConsoleApp.ModuloRevista;
 
 namespace ClubeLeitura.ConsoleApp.ModuloAmigo
 {
-    internal class RepositorioAmigo
+    internal class RepositorioAmigo : RepositorioBase
     {
-        private static int IdAmigo = 4;
-        private static List<Amigo> _listaAmigos = new List<Amigo>();
-        public static List<Amigo> ListarTodos() 
+        public List<Amigo> ListarTodos() 
         {
-            return _listaAmigos;
+            List<object> listaGenerica = _listaRegistro;
+            List<Amigo> listaTipada = listaGenerica.Cast<Amigo>().ToList();
+            return listaTipada;
         }
-        public static void Inserir(Amigo amigo)
+        public void Criar(Amigo amigo)
         {
-            amigo.Id = IdAmigo;
-            _listaAmigos.Add(amigo);
-            IncrementaIdAmigo();
+            amigo.Id = Id;
+            _listaRegistro.Add(amigo);
+            IncrementarId();
         }
-        public static Amigo BuscarPorId(int id)
+        public Amigo BuscarPorId(int id)
         {
             Amigo amigo = null;
-            foreach (Amigo _amigo in _listaAmigos)
+            foreach (Amigo _amigo in _listaRegistro)
             {
                 if (_amigo.Id == id)
                 {
@@ -33,23 +30,19 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
             }
             return amigo;
         }
-        public static void PopularListaAmigos()
+        public void PopularListaAmigos()
         {
             Amigo amigoUm = new Amigo(1, "Davi", "Davi Borges", "4732413078", "Rua Programador, CodeVille, Santa Compiladora, Brazil");
             Amigo amigoDois = new Amigo(2, "Caio", "Caio Valle", "4932413123", "Rua Desenvolvedor, Costa Code, Test Grande do Sul, Brazil");
             Amigo amigoTres = new Amigo(3, "Fabian", "Fabian", "5293245523", "Avenida Analista, Sao Compilador, Soft Ware do Norte, Brazil");
-            _listaAmigos.Add(amigoUm);
-            _listaAmigos.Add(amigoDois);
-            _listaAmigos.Add(amigoTres);
+            _listaRegistro.Add(amigoUm);
+            _listaRegistro.Add(amigoDois);
+            _listaRegistro.Add(amigoTres);
         }
-        private static void IncrementaIdAmigo()
-        {
-            IdAmigo++;
-        }
-        internal static Amigo SelecionarPorId(int idSelecionado)
+        internal Amigo SelecionarPorId(int idSelecionado)
         {
             Amigo amigo = null;
-            foreach (Amigo _amigo in _listaAmigos)
+            foreach (Amigo _amigo in _listaRegistro)
             {
                 if (_amigo.Id == idSelecionado)
                 {
@@ -59,7 +52,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
             }
             return amigo;
         }
-        internal static void Editar(int id, Amigo amigoAtualizado)
+        internal void Editar(int id, Amigo amigoAtualizado)
         {
             Amigo amigo = SelecionarPorId(id);
 
@@ -68,10 +61,10 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
             amigo.Telefone = amigoAtualizado.Telefone;
             amigo.Endereco = amigoAtualizado.Endereco;
         }
-        public static void Excluir(int idSelecionado)
+        public void Excluir(int idSelecionado)
         {
             Amigo amigo = SelecionarPorId(idSelecionado);
-            _listaAmigos.Remove(amigo);
+            _listaRegistro.Remove(amigo);
         }
     }
 }
