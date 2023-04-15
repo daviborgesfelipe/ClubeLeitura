@@ -9,8 +9,15 @@ namespace ClubeLeitura.ConsoleApp
     {
         static void Main(string[] args)
         {
-            RepositorioRevista.PopularListaRevistas();
-            RepositorioAmigo.PopularListaAmigos();
+            RepositorioRevista repositorioRevista = new RepositorioRevista();
+            repositorioRevista.PopularListaRevistas();
+            RepositorioAmigo repositorioAmigo = new RepositorioAmigo();
+            repositorioAmigo.PopularListaAmigos();
+
+            TelaAmigo telaAmigo = new TelaAmigo();
+            telaAmigo.repositorioAmigo = repositorioAmigo;
+            TelaRevista telaRevista = new TelaRevista();
+            telaRevista.repositorioRevista = repositorioRevista;
 
             MenuServico menuServico = new MenuServico();
             while (true) 
@@ -20,20 +27,20 @@ namespace ClubeLeitura.ConsoleApp
                 {
                     case 1:
                         //MenuAmigo();
-                        int opcaoMenuCadastroAmigo = TelaAmigo.ApresentarMenuCadastroAmigo();
+                        int opcaoMenuCadastroAmigo = telaAmigo.ApresentarMenuCadastroAmigo();
                         switch (opcaoMenuCadastroAmigo)
                         {
                             case 1:
-                                TelaAmigo.InserirNovoAmigo();
+                                telaAmigo.InserirNovoAmigo();
                                 break;
                             case 2:
-                                TelaAmigo.VisualizarAmigos();
+                                telaAmigo.VisualizarAmigos();
                                 break;
                             case 3:
-                                TelaAmigo.EditarAmigo();
+                                telaAmigo.EditarAmigo();
                                 break;
                             case 4:
-                                TelaAmigo.ExcluirAmigo();
+                                telaAmigo.ExcluirAmigo();
                                 break;
                             case 5:
                                 ApresentarMenuInicial();
@@ -41,20 +48,20 @@ namespace ClubeLeitura.ConsoleApp
                         }
                         break; 
                     case 2:
-                        int opcaoMenuCadastroRevista = TelaRevista.ApresentarMenuCadastroRevista();
+                        int opcaoMenuCadastroRevista = telaRevista.ApresentarMenuCadastroRevista();
                         switch (opcaoMenuCadastroRevista)
                         {
                             case 1:
-                                TelaRevista.InserirNovaRevista();
+                                telaRevista.InserirNovaRevista();
                                 break;
                             case 2:
-                                TelaRevista.VisualizarRevista();
+                                telaRevista.VisualizarRevista();
                                 break;
                             case 3:
-                                TelaRevista.EditarRevista();
+                                telaRevista.EditarRevista();
                                 break;
                             case 4:
-                                TelaRevista.ExcluirRevista();
+                                telaRevista.ExcluirRevista();
                                 break;
                             case 5:
                                 ApresentarMenuInicial();
