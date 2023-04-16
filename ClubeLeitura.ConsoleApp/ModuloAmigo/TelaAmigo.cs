@@ -26,8 +26,9 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
 
             return opcaoMenuAmigo;
         }
-        public void InserirNovoAmigo()
+        public void InserirNovoAmigo(RepositorioAmigo _repositorioAmigo)
         {
+            repositorioAmigo = _repositorioAmigo;
             Console.Clear();
             Console.WriteLine("Inserir Amigo");
             Console.WriteLine();
@@ -69,8 +70,9 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
             }
             return true;
         }
-        public void EditarAmigo()
+        public void EditarAmigo(RepositorioAmigo _repositorioAmigo)
         {
+            repositorioAmigo = _repositorioAmigo;
             Console.Clear();
             Console.WriteLine("Editar Amigo");
             Console.WriteLine();
