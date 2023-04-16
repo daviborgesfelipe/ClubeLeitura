@@ -20,5 +20,21 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
             DataDevolucao = dataDevolucao;
 
         }
+        public Emprestimo( Amigo amigo, Revista revista, string dataInicio, string dataDevolucao)
+        {
+            Amigo = amigo;
+            Revista = revista;
+            DataInicio = dataInicio;
+            DataDevolucao = dataDevolucao;
+
+        }
+        public Emprestimo(Emprestimo emprestimo)
+        {
+            Id = emprestimo.Id;
+            Amigo = emprestimo.Amigo;
+            Revista = emprestimo.Revista;
+            DataInicio = emprestimo.DataInicio;
+            DataDevolucao = emprestimo.DataDevolucao;
+        }
     }
 }
