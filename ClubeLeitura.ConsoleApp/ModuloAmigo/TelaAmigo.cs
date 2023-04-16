@@ -9,7 +9,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
     internal class TelaAmigo : TelaBase
     {
         public RepositorioAmigo repositorioAmigo = null;
-        public int ApresentarMenuCadastroAmigo()
+        public int InteragirMenuCadastroAmigo()
         {
             Console.Clear();
             Console.WriteLine("Menu amigo");
@@ -20,7 +20,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
             Console.WriteLine("[2] Vizualizar todos os amigos");
             Console.WriteLine("[3] Editar um amigo");
             Console.WriteLine("[4] Excluir um amigo");
-            Console.WriteLine("[5] Voltar menu");
+            Console.WriteLine("[5] Menu inicial");
             Console.WriteLine();
             int opcaoMenuAmigo = Convert.ToInt32(Console.ReadLine());
 
@@ -43,28 +43,30 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
             Console.ResetColor();
             Console.ReadKey();
         }
-        public bool VisualizarAmigos()
+        public bool VisualizarAmigos(bool mensagemVoltarMenuInicial)
         {
             List<Amigo> listaChamados = repositorioAmigo.ListarTodos();
+            if (listaChamados.Count == 0) { return false; }
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("{0,-10} | {1,-10} | {2,-15} | {3,-10} | {4,-60}",
+            Console.WriteLine("{0,-5} | {1,-15} | {2,-15} | {3,-13} | {4}",
                 "Id", "Nome", "NomeResponsavel", "Telefone", "Endereco");
             Console.ResetColor();
             Console.WriteLine("--------------------------------------------------------------------------------------------------------------------");
             foreach (Amigo amigo in listaChamados)
             {
-                Console.WriteLine("{0,-10} | {1,-10} | {2,-15} | {3,-10} | {4,-60}",
+                Console.WriteLine("{0,-5} | {1,-15} | {2,-15} | {3,-13} | {4}",
                     amigo.Id, amigo.Nome, amigo.NomeResponsavel, amigo.Telefone, amigo.Endereco);
 
             }
-
-            Console.ResetColor();
-            Console.WriteLine();
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("Pressione qualquer tecla para voltar ao menu de inicial.");
-            Console.ResetColor();
-            Console.ReadKey();
+            if(mensagemVoltarMenuInicial)
+            {
+                Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.WriteLine("Pressione qualquer tecla para voltar ao menu de inicial.");
+                Console.ResetColor();
+                Console.ReadKey();
+            }
             return true;
         }
         public void EditarAmigo()
@@ -72,9 +74,12 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
             Console.Clear();
             Console.WriteLine("Editar Amigo");
             Console.WriteLine();
-            bool temAmigos = VisualizarAmigos();
-            if (temAmigos == false) 
+            bool aparecerMenuRetorno = false;
+            bool temAmigos = VisualizarAmigos(aparecerMenuRetorno);
+            if (temAmigos == false)
             {
+                Console.WriteLine("Lista esta vazia");
+                Console.ReadKey();
                 return;
             }
             Console.WriteLine();
@@ -96,9 +101,12 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
             Console.Clear();
             Console.WriteLine("Excluir Amigo");
             Console.WriteLine();
-            bool temAmigos = VisualizarAmigos();
+            bool mensagemVoltarMenuInicial = false;
+            bool temAmigos = VisualizarAmigos(mensagemVoltarMenuInicial);
             if (temAmigos == false)
             {
+                Console.WriteLine("Lista esta vazia");
+                Console.ReadKey();
                 return;
             }
             Console.WriteLine();
