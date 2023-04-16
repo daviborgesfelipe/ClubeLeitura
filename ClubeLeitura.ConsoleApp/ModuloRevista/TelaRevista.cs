@@ -7,7 +7,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
     internal class TelaRevista : TelaBase
     {
         public RepositorioRevista repositorioRevista = null;
-        internal int ApresentarMenuCadastroRevista()
+        internal int InteragirMenuCadastroRevista()
         {
             Console.Clear();
             Console.WriteLine("Menu revista");
@@ -18,13 +18,14 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             Console.WriteLine("[2] Vizualizar todos as revistas");
             Console.WriteLine("[3] Editar uma revista");
             Console.WriteLine("[4] Excluir uma revista");
-            Console.WriteLine("[5] Voltar menu");
+            Console.WriteLine("[5] Menu inicial");
             Console.WriteLine();
             int opcaoMenuRevista = Convert.ToInt32(Console.ReadLine());
             return opcaoMenuRevista;
         }
-        internal void InserirNovaRevista()
+        internal void InserirNovaRevista(RepositorioRevista _repositorioRevista)
         {
+            repositorioRevista = _repositorioRevista;
             Console.Clear();
             Console.WriteLine("Inserir Revista");
             Console.WriteLine();
@@ -39,14 +40,18 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             Console.WriteLine("Pressione qualquer tecla para voltar ao menu de inicial.");
             Console.ResetColor();
         }
-        internal void EditarRevista()
+        internal void EditarRevista(RepositorioRevista _repositorioRevista)
         {
+            repositorioRevista = _repositorioRevista;
             Console.Clear();
             Console.WriteLine("Editar Revista");
             Console.WriteLine();
-            bool temRevista = VisualizarRevista();
+            bool mensagemVoltarMenuInicial = false;
+            bool temRevista = VisualizarRevistas(mensagemVoltarMenuInicial);
             if (temRevista == false)
             {
+                Console.WriteLine("Lista esta vazia");
+                Console.ReadKey();
                 return;
             }
             Console.WriteLine();
@@ -61,6 +66,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("Pressione qualquer tecla para voltar ao menu de inicial.");
             Console.ResetColor();
+            Console.ReadKey();
         }
         internal int EncontrarIdRevista()
         {
@@ -78,26 +84,29 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             } while (idInvalido);
             return idSelecionado;
         }
-        internal bool VisualizarRevista()
+        internal bool VisualizarRevistas(bool mensagemVoltarMenuInicial)
         {
             List<Revista> listaRevistas = repositorioRevista.ListarTodos();
+            if (listaRevistas.Count == 0) { return false; }
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("{0,-10} | {1,-20} | {2,-15} | {3,-10} | {4,-20} | {5, -15} | {6, -10}",
-                    "Id", "Titulo", "NumeroEdicao", "AnoRevista", "Etiqueta", "Cor", "Numero");
+            Console.WriteLine("{0,-5} | {1,-20} | {2,-15} | {3,-10} | {4,-20} | {5}",
+                    "Id", "Titulo", "NumeroEdicao", "AnoRevista", "Etiqueta", "Cor");
             Console.ResetColor();
-            Console.WriteLine("------------------------------------------------------------------------------------------------------------------------");
+            Console.WriteLine("-------------------------------------------------------------------------------------------------");
             foreach (Revista revista in listaRevistas)
             {
-                Console.WriteLine("{0,-10} | {1,-20} | {2,-15} | {3,-10} | {4,-20} | {5, -15} | {6, -10}",
-                    revista.Id, revista.Titulo, revista.NumeroEdicao, revista.AnoRevista, revista.Caixa.Etiqueta, revista.Caixa.Cor, revista.Caixa.Numero);
+                Console.WriteLine("{0,-5} | {1,-20} | {2,-15} | {3,-10} | {4,-20} | {5}",
+                    revista.Id, revista.Titulo, revista.NumeroEdicao, revista.AnoRevista, revista.Caixa.Etiqueta, revista.Caixa.Cor);
             }
-            Console.ResetColor();
-            Console.WriteLine();
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("Pressione qualquer tecla para voltar ao menu de inicial.");
-            Console.ResetColor();
-            Console.ReadKey();
+            if (mensagemVoltarMenuInicial)
+            {
+                Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.WriteLine("Pressione qualquer tecla para voltar ao menu de inicial.");
+                Console.ResetColor();
+                Console.ReadKey();
+            }
             return true;
         }
         internal Revista ObterRevista()
@@ -112,9 +121,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             string etiquetaCaixa = Console.ReadLine();
             Console.WriteLine("Digite a cor da caixa");
             string corCaixa = Console.ReadLine();
-            Console.WriteLine("Digite o numero da caixa");
-            double numeroaCaixa = Convert.ToDouble(Console.ReadLine());
-            Caixa caixa = new Caixa(etiquetaCaixa, corCaixa, numeroaCaixa);
+            Caixa caixa = new Caixa(etiquetaCaixa, corCaixa);
             Revista revista = new Revista(titulo, numeroEdicao, anoRevista, caixa);
             return revista;
         }
@@ -123,9 +130,12 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             Console.Clear();
             Console.WriteLine("Excluir Revista");
             Console.WriteLine();
-            bool temRevista = VisualizarRevista();
+            bool mensagemVoltarMenuInicial = false;
+            bool temRevista = VisualizarRevistas(mensagemVoltarMenuInicial);
             if (temRevista == false)
             {
+                Console.WriteLine("Lista esta vazia");
+                Console.ReadKey();
                 return;
             }
             Console.WriteLine();
@@ -139,6 +149,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("Pressione qualquer tecla para voltar ao menu de inicial.");
             Console.ResetColor();
+            Console.ReadKey();
         }
     }
 }
