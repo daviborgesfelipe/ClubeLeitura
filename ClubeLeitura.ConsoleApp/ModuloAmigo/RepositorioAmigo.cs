@@ -32,9 +32,9 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
         }
         public void PopularListaAmigos()
         {
-            Amigo amigoUm = new Amigo(1, "Davi", "Davi Borges", "4732413078", "Rua Programador, CodeVille, Santa Compiladora, Brazil");
-            Amigo amigoDois = new Amigo(2, "Caio", "Caio Valle", "4932413123", "Rua Desenvolvedor, Costa Code, Test Grande do Sul, Brazil");
-            Amigo amigoTres = new Amigo(3, "Fabian", "Fabian", "5293245523", "Avenida Analista, Sao Compilador, Soft Ware do Norte, Brazil");
+            Amigo amigoUm = new Amigo(1, "Davi", "Davi Borges", "4732413078", "CodeVille, Santa Compiladora, Brazil");
+            Amigo amigoDois = new Amigo(2, "Caio", "Caio Valle", "4932413123", "Costa Code, Test Grande do Sul, Brazil");
+            Amigo amigoTres = new Amigo(3, "Fabian", "Fabian", "5293245523", "Sao Compilador, Soft Ware do Norte, Brazil");
             _listaRegistro.Add(amigoUm);
             _listaRegistro.Add(amigoDois);
             _listaRegistro.Add(amigoTres);
@@ -47,7 +47,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
                 if (_amigo.Id == idSelecionado)
                 {
                     amigo = _amigo;
-                    break;
+                    return _amigo;
                 }
             }
             return amigo;
