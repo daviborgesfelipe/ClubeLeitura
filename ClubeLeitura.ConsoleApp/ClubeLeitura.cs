@@ -1,7 +1,7 @@
 ﻿using ClubeLeitura.ConsoleApp.ModuloAmigo;
+using ClubeLeitura.ConsoleApp.ModuloCaixa;
 using ClubeLeitura.ConsoleApp.ModuloEmprestimo;
 using ClubeLeitura.ConsoleApp.ModuloRevista;
-using ClubeLeitura.ConsoleApp.Servicos;
 
 namespace ClubeLeitura.ConsoleApp
 {
@@ -9,117 +9,136 @@ namespace ClubeLeitura.ConsoleApp
     {
         static void Main(string[] args)
         {
-            RepositorioRevista repositorioRevista = new RepositorioRevista();
-            repositorioRevista.PopularListaRevistas();
-            RepositorioAmigo repositorioAmigo = new RepositorioAmigo();
-            repositorioAmigo.PopularListaAmigos();
+            RepositorioCaixa _repositorioCaixa = new RepositorioCaixa();
+            RepositorioRevista _repositorioRevista = new RepositorioRevista();
+            RepositorioAmigo _repositorioAmigo = new RepositorioAmigo();
+            RepositorioEmprestimo _repositorioEmprestimo = new RepositorioEmprestimo();
+            
+            TelaAmigo _telaAmigo = new TelaAmigo();
+            TelaRevista _telaRevista = new TelaRevista();
+            TelaEmprestimo _telaEmprestimo = new TelaEmprestimo();
+            TelaCaixa _telaCaixa = new TelaCaixa();
+            
+            
+            _repositorioCaixa.PopularListaCaixa();
+            _repositorioRevista.PopularListaRevistas(_repositorioCaixa);
+            _repositorioAmigo.PopularListaAmigos();
+            _repositorioEmprestimo.PopularListaEmprestimo(_repositorioAmigo, _repositorioRevista);
 
-            TelaAmigo telaAmigo = new TelaAmigo();
-            telaAmigo.repositorioAmigo = repositorioAmigo;
-            TelaRevista telaRevista = new TelaRevista();
-            telaRevista.repositorioRevista = repositorioRevista;
-
-            MenuServico menuServico = new MenuServico();
-            while (true) 
-            {
-                int opcaoMenuInicial = ApresentarMenuInicial();
-                switch (opcaoMenuInicial)
-                {
-                    case 1:
-                        //MenuAmigo();
-                        int opcaoMenuCadastroAmigo = telaAmigo.ApresentarMenuCadastroAmigo();
-                        switch (opcaoMenuCadastroAmigo)
-                        {
-                            case 1:
-                                telaAmigo.InserirNovoAmigo();
-                                break;
-                            case 2:
-                                telaAmigo.VisualizarAmigos();
-                                break;
-                            case 3:
-                                telaAmigo.EditarAmigo();
-                                break;
-                            case 4:
-                                telaAmigo.ExcluirAmigo();
-                                break;
-                            case 5:
-                                ApresentarMenuInicial();
-                                break;
-                        }
-                        break; 
-                    case 2:
-                        int opcaoMenuCadastroRevista = telaRevista.ApresentarMenuCadastroRevista();
-                        switch (opcaoMenuCadastroRevista)
-                        {
-                            case 1:
-                                telaRevista.InserirNovaRevista();
-                                break;
-                            case 2:
-                                telaRevista.VisualizarRevista();
-                                break;
-                            case 3:
-                                telaRevista.EditarRevista();
-                                break;
-                            case 4:
-                                telaRevista.ExcluirRevista();
-                                break;
-                            case 5:
-                                ApresentarMenuInicial();
-                                break;
-                        }
-                        break; 
-                    case 3:
-                        MenuEmprestimo();
-                        break;
-                    default:
-                        break;
-                }
-            }
-
+            _telaAmigo.repositorioAmigo = _repositorioAmigo;
+            _telaRevista.repositorioRevista = _repositorioRevista;
+            _telaEmprestimo._repositorioEmprestimo = _repositorioEmprestimo;
+            _telaCaixa.repositorioCaixa = _repositorioCaixa;
             #region MenuInicial
-            static int ApresentarMenuInicial()
+
+            int InteragirMenuInicial()
             {
                 Console.Clear();
                 Console.WriteLine("Clube da Leitura");
                 Console.WriteLine();
                 Console.WriteLine("Selecione a opcao desejada");
                 Console.WriteLine();
-                Console.WriteLine("[1] Menu amigos");
-                Console.WriteLine("[2] Menu revistas");
-                Console.WriteLine("[3] Menu emprestimos");
+                Console.WriteLine("[1] Menu Amigos");
+                Console.WriteLine("[2] Menu Revistas");
+                Console.WriteLine("[3] Menu Emprestimos");
                 Console.WriteLine(); 
                 int opcaoMenuInicial = Convert.ToInt32(Console.ReadLine());
                 return opcaoMenuInicial;
             }
             #endregion
-            void MenuEmprestimo()
+
+            while (true) 
             {
-                menuServico.ImprimeMenuEmprestimos();
-                int opcaoMenuEmprestimo = Convert.ToInt32(Console.ReadLine());
+                int opcaoMenuInicial = InteragirMenuInicial();
+                switch (opcaoMenuInicial)
+                {
+                    case 1:
+                        IniciarMenuAmigo(_telaAmigo);
+                        break;
+                    case 2:
+                        IniciarMenuRevista(_telaRevista);
+                        break;
+                    case 3:
+                        InicialMenuEmprestimo(_telaEmprestimo);
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            void InicialMenuEmprestimo(TelaEmprestimo _telaEmprestimo)
+            {
+                int opcaoMenuEmprestimo = _telaEmprestimo.InteragirMenuEmprestimos();
                 switch (opcaoMenuEmprestimo)
                 {
                     case 1:
-                        //CadastrarEmprestimo
+                        _telaEmprestimo.InserirNovoEmprestimo(_repositorioAmigo, _repositorioRevista);
                         break;
                     case 2:
-                        //VizualizarEmprestimo();
+                        bool mensagemVoltarMenuInicial = true;
+                        _telaEmprestimo.VisualizarEmprestimo(mensagemVoltarMenuInicial);
                         break;
                     case 3:
-                        //VizualizarEmprestimoPorId();
+                        _telaEmprestimo.EditarEmprestimo(_repositorioAmigo, _repositorioRevista);
                         break;
                     case 4:
-                        //EditarEmprestimo();
+                        _telaEmprestimo.ExcluirEmprestimo();
                         break;
                     case 5:
-                        //FinalizarEmprestimo();
+                        InteragirMenuInicial();
                         break;
-                    case 6:
-                        menuServico.ImprimeMenuInicial();
+                }
+            }
+
+            void IniciarMenuRevista(TelaRevista _telaRevista)
+            {
+                int opcaoMenuCadastroRevista = _telaRevista.InteragirMenuCadastroRevista();
+                switch (opcaoMenuCadastroRevista)
+                {
+                    case 1:
+                        _telaRevista.InserirNovaRevista(_repositorioRevista);
+                        break;
+                    case 2:
+                        bool mensagemVoltarMenuInicial = true;
+                        _telaRevista.VisualizarRevistas(mensagemVoltarMenuInicial);
+                        break;
+                    case 3:
+                        _telaRevista.EditarRevista(_repositorioRevista);
+                        break;
+                    case 4:
+                        _telaRevista.ExcluirRevista();
+                        break;
+                    case 5:
+                        InteragirMenuInicial();
+                        break;
+                }
+            }
+
+            void IniciarMenuAmigo(TelaAmigo _telaAmigo)
+            {
+                int opcaoMenuCadastroAmigo = _telaAmigo.InteragirMenuCadastroAmigo();
+                switch (opcaoMenuCadastroAmigo)
+                {
+                    case 1:
+                        _telaAmigo.InserirNovoAmigo(_repositorioAmigo);
+                        break;
+                    case 2:
+                        bool mensagemVoltarMenuInicial = true;
+                        _telaAmigo.VisualizarAmigos(mensagemVoltarMenuInicial);
+                        break;
+                    case 3:
+                        _telaAmigo.EditarAmigo(_repositorioAmigo);
+                        break;
+                    case 4:
+                        _telaAmigo.ExcluirAmigo();
+                        break;
+                    case 5:
+                        InteragirMenuInicial();
                         break;
                 }
             }
         }
-        internal static void ApresentarMensagem(string mensagem, ConsoleColor cor)
+        internal void ApresentarMensagem(string mensagem, ConsoleColor cor)
         {
             Console.WriteLine();
             Console.ForegroundColor = cor;
@@ -127,7 +146,7 @@ namespace ClubeLeitura.ConsoleApp
             Console.ResetColor();
             Console.ReadLine();
         }
-        public static void MostrarCabecalho(string titulo, string subtitulo)
+        public void MostrarCabecalho(string titulo, string subtitulo)
         {
             Console.Clear();
             Console.WriteLine();
@@ -136,23 +155,6 @@ namespace ClubeLeitura.ConsoleApp
             Console.WriteLine(subtitulo);
             Console.WriteLine();
             Console.WriteLine();
-        }
-        private static int ApresertarMenuAmigo()
-        {
-            Console.Clear();
-            Console.WriteLine("Menu amigo");
-            Console.WriteLine();
-            Console.WriteLine("Selecione a opcao desejada");
-            Console.WriteLine();
-            Console.WriteLine("[1] Cadastrar um amigo");
-            Console.WriteLine("[2] Vizualizar todos os amigos");
-            Console.WriteLine("[3] Vizualizar amigo por id");
-            Console.WriteLine("[4] Editar um amigo");
-            Console.WriteLine("[5] Excluir um amigo");
-            Console.WriteLine("[6] Voltar menu");
-            Console.WriteLine();
-            int opcaoMenuAmigos = Convert.ToInt32(Console.ReadLine());
-            return opcaoMenuAmigos;
         }
     }
 }
