@@ -7,6 +7,16 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
 {
     internal class RepositorioRevista : RepositorioBase
     {
+        public RepositorioCaixa repositorioCaixa { get; set; }
+        internal void PopularListaRevistas(RepositorioCaixa _repositorioCaixa)
+        {
+            Revista revistaComCaixaUm = new Revista(1, "Acelerando", 777, "01/02/2020", _repositorioCaixa.SelecionarPorId(1));
+            Revista revistaComCaixaDois = new Revista(2, "Recreio", 4312, "11/07/2023", _repositorioCaixa.SelecionarPorId(2));
+            Revista revistaComCaixaTres = new Revista(3, "Surf", 2018, "23/12/2021", _repositorioCaixa.SelecionarPorId(3));
+            _listaRegistro.Add(revistaComCaixaUm);
+            _listaRegistro.Add(revistaComCaixaDois);
+            _listaRegistro.Add(revistaComCaixaTres);
+        }
         internal List<Revista> ListarTodos()
         {
             List<object> listaGenerica = _listaRegistro;
@@ -32,15 +42,6 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             }
             return revista;
         }
-        internal void PopularListaRevistas()
-        {
-            Revista revistaComCaixaUm = new Revista(1, "Acelerando", 777, "01/02/2020", new Caixa(1, "SuperMercado", "Verde", 33));
-            Revista revistaComCaixaDois = new Revista(2, "Recreio", 4312, "11/07/2023", new Caixa(2, "Caixa Plastico", "Transparente", 0));
-            Revista revistaComCaixaTres = new Revista(3, "Surf", 2018, "23/12/2021", new Caixa(3, "Gaveta da Cama", "Medeira", 0));
-            _listaRegistro.Add(revistaComCaixaUm);
-            _listaRegistro.Add(revistaComCaixaDois);
-            _listaRegistro.Add(revistaComCaixaTres);
-        }
 
         internal Revista SelecionarPorId(int idSelecionado)
         {
@@ -62,7 +63,6 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             revista.NumeroEdicao = revistaAtualizada.NumeroEdicao;
             revista.AnoRevista = revistaAtualizada.AnoRevista;
             revista.Caixa.Etiqueta = revistaAtualizada.Caixa.Etiqueta;
-            revista.Caixa.Numero = revistaAtualizada.Caixa.Numero;
         }
         internal void Excluir(int idSelecionado)
         {
