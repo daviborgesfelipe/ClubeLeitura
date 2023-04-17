@@ -5,31 +5,6 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
 {
     internal class RepositorioAmigo : RepositorioBase
     {
-        public List<Amigo> ListarTodos() 
-        {
-            List<object> listaGenerica = _listaRegistro;
-            List<Amigo> listaTipada = listaGenerica.Cast<Amigo>().ToList();
-            return listaTipada;
-        }
-        public void Criar(Amigo amigo)
-        {
-            amigo.Id = Id;
-            _listaRegistro.Add(amigo);
-            IncrementarId();
-        }
-        public Amigo BuscarPorId(int id)
-        {
-            Amigo amigo = null;
-            foreach (Amigo _amigo in _listaRegistro)
-            {
-                if (_amigo.Id == id)
-                {
-                    amigo = _amigo;
-                    break;
-                }
-            }
-            return amigo;
-        }
         public void PopularListaAmigos()
         {
             Amigo amigoUm = new Amigo(1, "Davi", "Davi Borges", "4732413078", "CodeVille, Santa Compiladora, Brazil");
@@ -38,6 +13,18 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
             _listaRegistro.Add(amigoUm);
             _listaRegistro.Add(amigoDois);
             _listaRegistro.Add(amigoTres);
+        }
+        public List<Amigo> ListarTodos() 
+        {
+            List<object> listaGenerica = _listaRegistro;
+            List<Amigo> listaTipada = listaGenerica.Cast<Amigo>().ToList();
+            return listaTipada;
+        }
+        public void Inserir(Amigo amigo)
+        {
+            amigo.Id = Id;
+            _listaRegistro.Add(amigo);
+            IncrementarId();
         }
         internal Amigo SelecionarPorId(int idSelecionado)
         {
