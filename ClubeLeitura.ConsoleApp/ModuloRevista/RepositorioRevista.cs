@@ -62,7 +62,6 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             revista.Titulo = revistaAtualizada.Titulo;
             revista.NumeroEdicao = revistaAtualizada.NumeroEdicao;
             revista.AnoRevista = revistaAtualizada.AnoRevista;
-            revista.Caixa.Etiqueta = revistaAtualizada.Caixa.Etiqueta;
         }
         internal void Excluir(int idSelecionado)
         {
