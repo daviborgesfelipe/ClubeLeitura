@@ -7,7 +7,6 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
 {
     internal class RepositorioRevista : RepositorioBase
     {
-        public RepositorioCaixa repositorioCaixa { get; set; }
         internal void PopularListaRevistas(RepositorioCaixa _repositorioCaixa)
         {
             Revista revistaComCaixaUm = new Revista(1, "Acelerando", 777, "01/02/2020", _repositorioCaixa.SelecionarPorId(1));
@@ -29,20 +28,6 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             _listaRegistro.Add(revista);
             IncrementarId();
         }
-        internal Revista BuscarPorId(int id)
-        {
-            Revista revista = null;
-            foreach (Revista _revista in _listaRegistro)
-            {
-                if (_revista.Id == id)
-                {
-                    revista = _revista;
-                    break;
-                }
-            }
-            return revista;
-        }
-
         internal Revista SelecionarPorId(int idSelecionado)
         {
             Revista revista = null;
