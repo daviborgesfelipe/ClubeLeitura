@@ -31,20 +31,6 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
             _listaRegistro.Add(caixa);
             IncrementarId();
         }
-        internal Caixa BuscarPorId(int id)
-        {
-            Caixa caixa = null;
-            foreach (Caixa _caixa in _listaRegistro)
-            {
-                if (_caixa.Id == id)
-                {
-                    caixa = _caixa;
-                    break;
-                }
-            }
-            return caixa;
-        }
-
         internal Caixa SelecionarPorId(int idSelecionado)
         {
             Caixa caixa = null;
