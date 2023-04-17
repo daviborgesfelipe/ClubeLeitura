@@ -13,7 +13,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
             Console.WriteLine("Inserir Amigo");
             Console.WriteLine();
             Amigo novoAmigo = ObterAmigo();
-            repositorioAmigo.Criar(novoAmigo);
+            repositorioAmigo.Inserir(novoAmigo);
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine("Amigo inserido com sucesso");
@@ -120,6 +120,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
             Console.ReadKey();
         }
         
+
         public Amigo ObterAmigo()
         {
             Console.WriteLine("Digite o nome do amigo");
