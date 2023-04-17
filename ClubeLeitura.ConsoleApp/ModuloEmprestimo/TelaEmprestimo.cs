@@ -11,12 +11,20 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
         public RepositorioAmigo repositorioAmigo = null;
         public ClubeLeitura clubeLeitura = null;
 
-        internal void InserirNovoEmprestimo(RepositorioAmigo repositorioAmigo, RepositorioRevista repositorioRevista, RepositorioEmprestimo repositorioEmprestimo, TelaEmprestimo telaEmprestimo)
+        internal void InserirNovoEmprestimo(
+            RepositorioAmigo repositorioAmigo,
+            RepositorioRevista repositorioRevista,
+            RepositorioEmprestimo repositorioEmprestimo
+            )
         {
             Console.Clear();
             Console.WriteLine("Inserir Emprestimo");
             Console.WriteLine();
-            Emprestimo novoEmprestimo = ObterEmprestimo(repositorioAmigo, repositorioRevista, repositorioEmprestimo, telaEmprestimo);
+            Emprestimo novoEmprestimo = ObterEmprestimo(
+                repositorioAmigo, 
+                repositorioRevista, 
+                repositorioEmprestimo
+                );
             repositorioEmprestimo.Inserir(novoEmprestimo);
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.DarkGreen;
@@ -74,7 +82,10 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
                     emprestimo.Id, emprestimo.Amigo.Nome, emprestimo.Revista.Titulo, emprestimo.DataInicio, emprestimo.DataDevolucao);
             }
         }
-        internal void EditarEmprestimo(RepositorioAmigo repositorioAmigo, RepositorioRevista repositorioRevista)
+        internal void EditarEmprestimo(
+            RepositorioAmigo repositorioAmigo, 
+            RepositorioRevista repositorioRevista
+            )
         {
             Console.Clear();
             Console.WriteLine("Editar Emprestimo");
@@ -115,7 +126,11 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
             Console.ReadKey();
         }
         
-        internal Emprestimo ObterEmprestimo(RepositorioAmigo repositorioAmigo, RepositorioRevista repositorioRevista)
+
+        internal Emprestimo ObterEmprestimo(
+            RepositorioAmigo repositorioAmigo, 
+            RepositorioRevista repositorioRevista
+            )
         {
             this.repositorioAmigo = repositorioAmigo;
             this.repositorioRevista = repositorioRevista;
@@ -130,23 +145,29 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
             Amigo amigoEmprestimo = this.repositorioAmigo.SelecionarPorId(amigoId);
             int revistaId = Convert.ToInt32(revistaTituloOuId);
             Revista revistaEmprestimo = this.repositorioRevista.SelecionarPorId(revistaId);
-            Emprestimo emprestimo = new Emprestimo(amigoEmprestimo, revistaEmprestimo, dataInicioEmprestimo, dataDevolucaoEmprestimo);
+            Emprestimo emprestimo = new Emprestimo(
+                amigoEmprestimo, 
+                revistaEmprestimo, 
+                dataInicioEmprestimo, 
+                dataDevolucaoEmprestimo);
             return emprestimo;
         }
-        internal Emprestimo ObterEmprestimo(RepositorioAmigo _repositorioAmigo, RepositorioRevista _repositorioRevista, RepositorioEmprestimo _repositorioEmprestimo, TelaEmprestimo _telaEmprestimo)
+        internal Emprestimo ObterEmprestimo(
+            RepositorioAmigo _repositorioAmigo, 
+            RepositorioRevista _repositorioRevista,
+            RepositorioEmprestimo _repositorioEmprestimo
+            )
         {
             repositorioAmigo = _repositorioAmigo;
             repositorioRevista = _repositorioRevista;
             repositorioEmprestimo = _repositorioEmprestimo;
             List<Emprestimo> _listaEmprestimos = repositorioEmprestimo.ListarTodos();
-            List<Revista> _listaRevista = repositorioRevista.ListarTodos();
             Console.WriteLine("Digite o id da amigo");
             int amigoId = Convert.ToInt32(Console.ReadLine());
-            //verificar na lista de emprestimo se o amigo ja pessui um emprestimo
-            Amigo amigoEmprestimo = _repositorioAmigo.SelecionarPorId(amigoId);
+            Amigo amigoEmprestimo = repositorioAmigo.SelecionarPorId(amigoId);
             foreach (var _amigoFor in _listaEmprestimos)
             {
-                if(_amigoFor.Id == amigoEmprestimo.Id)
+                if(_amigoFor.Amigo.Id == amigoEmprestimo.Id)
                 {
                     Console.ForegroundColor = ConsoleColor.DarkYellow;
                     Console.WriteLine("Amigo ja possui um emprestimo");
@@ -154,18 +175,25 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
                     Console.WriteLine("Pressione qualquer tecla para voltar ao menu de inicial.");
                     Console.ResetColor();
                     Console.ReadKey();
+                    //VOLTAR MEU PRINCIAPAL
                     break;
                 }
             }
             Console.WriteLine("Digite o id da revista");
             string revistaTituloOuId = Console.ReadLine();
             int revistaId = Convert.ToInt32(revistaTituloOuId);
-            //verificar se revista ja foi emprestada
+            Revista revistaEmprestimo = repositorioRevista.SelecionarPorId(revistaId);
             foreach (var _revistaFor in _listaEmprestimos)
             {
-                if (_revistaFor.Id == revistaId)
+                if (_revistaFor.Revista.Id == revistaEmprestimo.Id)
                 {
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
                     Console.WriteLine("Revista ja emprestada");
+                    Console.WriteLine();
+                    Console.WriteLine("Pressione qualquer tecla para voltar ao menu de inicial.");
+                    Console.ResetColor();
+                    Console.ReadKey();
+                    //VOLTAR MEU PRINCIAPAL
                     break;
                 }
             }
@@ -174,10 +202,15 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
             string dataInicioEmprestimo = Console.ReadLine();
             Console.WriteLine("Digite a data que ira devolver a revista");
             string dataDevolucaoEmprestimo = Console.ReadLine();
-            Revista revistaEmprestimo = _repositorioRevista.SelecionarPorId(revistaId);
-            Emprestimo emprestimo = new Emprestimo(amigoEmprestimo, revistaEmprestimo, dataInicioEmprestimo, dataDevolucaoEmprestimo);
+            Emprestimo emprestimo = new Emprestimo(
+                amigoEmprestimo, 
+                revistaEmprestimo,
+                dataInicioEmprestimo,
+                dataDevolucaoEmprestimo
+                );
             return emprestimo;
         }
+
         public int InteragirMenuEmprestimos()
         {
             Console.Clear();
