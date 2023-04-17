@@ -8,7 +8,11 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
         public RepositorioRevista repositorioRevista = null;
         public RepositorioCaixa repositorioCaixa = null;
 
-        internal void InserirNovaRevista(RepositorioRevista _repositorioRevista, RepositorioCaixa _repositorioCaixa, TelaCaixa _telaCaixa)
+        internal void InserirNovaRevista(
+            RepositorioRevista _repositorioRevista,
+            RepositorioCaixa _repositorioCaixa, 
+            TelaCaixa _telaCaixa
+            )
         {
             repositorioRevista = _repositorioRevista;
             Console.Clear();
@@ -25,7 +29,10 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             Console.WriteLine("Pressione qualquer tecla para voltar ao menu de inicial.");
             Console.ResetColor();
         }
-        internal bool VisualizarRevistas(bool mensagemVoltarMenuInicial, RepositorioRevista _repositorioRevista)
+        internal bool VisualizarRevistas(
+            bool mensagemVoltarMenuInicial, 
+            RepositorioRevista _repositorioRevista
+            )
         {
             repositorioRevista = _repositorioRevista;
             List<Revista> listaRevistas = repositorioRevista.ListarTodos();
@@ -112,7 +119,11 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             Console.ReadKey();
         }
         
-        internal Revista ObterRevista(RepositorioCaixa _repositorioCaixa, TelaCaixa _telaCaixa)
+
+        internal Revista ObterRevista(
+            RepositorioCaixa _repositorioCaixa,
+            TelaCaixa _telaCaixa
+            )
         {
             repositorioCaixa = _repositorioCaixa;
             Revista revista;
@@ -126,7 +137,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             _telaCaixa.VisualizarCaixas(mensagemVoltarMenuInicial);
             Console.WriteLine("Digite o id da caixa");
             int id = int.Parse(Console.ReadLine());
-            Caixa caixa = repositorioCaixa.BuscarPorId(id);
+            Caixa caixa = repositorioCaixa.SelecionarPorId(id);
             revista = new Revista(titulo, numeroEdicao, anoRevista, caixa);
             return revista;
         }
