@@ -112,6 +112,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
             Console.ReadKey();
         }
         
+
         internal Caixa ObterCaixa()
         {
             Caixa caixa;
