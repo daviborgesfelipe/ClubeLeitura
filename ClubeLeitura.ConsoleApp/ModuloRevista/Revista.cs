@@ -24,6 +24,12 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             AnoRevista = anoRevista;
             Caixa = caixa;
         }
+        public Revista(string titulo, int numeroEdicao, string anoRevista)
+        {
+            Titulo = titulo;
+            NumeroEdicao = numeroEdicao;
+            AnoRevista = anoRevista;
+        }
         public Revista(Revista revista)
         {
             Titulo = revista.Titulo;
