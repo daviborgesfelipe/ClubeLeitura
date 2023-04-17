@@ -27,24 +27,10 @@ namespace ClubeLeitura.ConsoleApp
 
             _telaAmigo.repositorioAmigo = _repositorioAmigo;
             _telaRevista.repositorioRevista = _repositorioRevista;
-            _telaEmprestimo._repositorioEmprestimo = _repositorioEmprestimo;
+            _telaEmprestimo.repositorioEmprestimo = _repositorioEmprestimo;
             _telaCaixa.repositorioCaixa = _repositorioCaixa;
             #region MenuInicial
 
-            int InteragirMenuInicial()
-            {
-                Console.Clear();
-                Console.WriteLine("Clube da Leitura");
-                Console.WriteLine();
-                Console.WriteLine("Selecione a opcao desejada");
-                Console.WriteLine();
-                Console.WriteLine("[1] Menu Amigos");
-                Console.WriteLine("[2] Menu Revistas");
-                Console.WriteLine("[3] Menu Emprestimos");
-                Console.WriteLine(); 
-                int opcaoMenuInicial = Convert.ToInt32(Console.ReadLine());
-                return opcaoMenuInicial;
-            }
             #endregion
 
             while (true) 
@@ -61,9 +47,27 @@ namespace ClubeLeitura.ConsoleApp
                     case 3:
                         InicialMenuEmprestimo(_telaEmprestimo);
                         break;
+                    case 4:
+                        InicialMenuCaixas(_telaCaixa);
+                        break;
                     default:
                         break;
                 }
+            }
+            int InteragirMenuInicial()
+            {
+                Console.Clear();
+                Console.WriteLine("Clube da Leitura");
+                Console.WriteLine();
+                Console.WriteLine("Selecione a opcao desejada");
+                Console.WriteLine();
+                Console.WriteLine("[1] Menu Amigos");
+                Console.WriteLine("[2] Menu Revistas");
+                Console.WriteLine("[3] Menu Emprestimos");
+                Console.WriteLine("[4] Menu Caixas");
+                Console.WriteLine(); 
+                int opcaoMenuInicial = Convert.ToInt32(Console.ReadLine());
+                return opcaoMenuInicial;
             }
 
             void InicialMenuEmprestimo(TelaEmprestimo _telaEmprestimo)
@@ -72,7 +76,7 @@ namespace ClubeLeitura.ConsoleApp
                 switch (opcaoMenuEmprestimo)
                 {
                     case 1:
-                        _telaEmprestimo.InserirNovoEmprestimo(_repositorioAmigo, _repositorioRevista);
+                        _telaEmprestimo.InserirNovoEmprestimo(_repositorioAmigo, _repositorioRevista, _repositorioEmprestimo, _telaEmprestimo);
                         break;
                     case 2:
                         bool mensagemVoltarMenuInicial = true;
@@ -82,7 +86,7 @@ namespace ClubeLeitura.ConsoleApp
                         _telaEmprestimo.EditarEmprestimo(_repositorioAmigo, _repositorioRevista);
                         break;
                     case 4:
-                        _telaEmprestimo.ExcluirEmprestimo();
+                        _telaEmprestimo.ExcluirEmprestimo(_repositorioEmprestimo);
                         break;
                     case 5:
                         InteragirMenuInicial();
@@ -96,17 +100,17 @@ namespace ClubeLeitura.ConsoleApp
                 switch (opcaoMenuCadastroRevista)
                 {
                     case 1:
-                        _telaRevista.InserirNovaRevista(_repositorioRevista);
+                        _telaRevista.InserirNovaRevista(_repositorioRevista, _repositorioCaixa, _telaCaixa);
                         break;
                     case 2:
                         bool mensagemVoltarMenuInicial = true;
-                        _telaRevista.VisualizarRevistas(mensagemVoltarMenuInicial);
+                        _telaRevista.VisualizarRevistas(mensagemVoltarMenuInicial, _repositorioRevista);
                         break;
                     case 3:
                         _telaRevista.EditarRevista(_repositorioRevista);
                         break;
                     case 4:
-                        _telaRevista.ExcluirRevista();
+                        _telaRevista.ExcluirRevista(_repositorioRevista);
                         break;
                     case 5:
                         InteragirMenuInicial();
@@ -130,7 +134,31 @@ namespace ClubeLeitura.ConsoleApp
                         _telaAmigo.EditarAmigo(_repositorioAmigo);
                         break;
                     case 4:
-                        _telaAmigo.ExcluirAmigo();
+                        _telaAmigo.ExcluirAmigo(_repositorioAmigo);
+                        break;
+                    case 5:
+                        InteragirMenuInicial();
+                        break;
+                }
+            }
+
+            void InicialMenuCaixas(TelaCaixa _telaCaixa)
+            {
+                int opcaoMenuCadastroCaixa = _telaCaixa.InteragirMenuCadastroCaixa();
+                switch (opcaoMenuCadastroCaixa)
+                {
+                    case 1:
+                        _telaCaixa.InserirNovoCaixa(_repositorioCaixa);
+                        break;
+                    case 2:
+                        bool mensagemVoltarMenuInicial = true;
+                        _telaCaixa.VisualizarCaixas(mensagemVoltarMenuInicial);
+                        break;
+                    case 3:
+                        _telaCaixa.EditarCaixa(_repositorioCaixa);
+                        break;
+                    case 4:
+                        _telaCaixa.ExcluirCaixa(_repositorioCaixa);
                         break;
                     case 5:
                         InteragirMenuInicial();
